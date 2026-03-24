@@ -1,6 +1,7 @@
 # 🔍 K-Insider Quant Monitor
 
 한국 DART 공시 시스템의 내부자 거래 데이터를 자동 분석하여, 임원 및 대주주의 **'진짜 매수 신호'**를 포착하는 퀀트 대시보드입니다.
+
 share.streamlit.io
 
 ---
