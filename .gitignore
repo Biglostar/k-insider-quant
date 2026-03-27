@@ -2,5 +2,9 @@ venv/
 __pycache__/
 *.pyc
 *.db
+*.db-shm
+*.db-wal
+opendartreader_corp_codes_*.pkl
+docs_cache/
 .env
 .DS_Store

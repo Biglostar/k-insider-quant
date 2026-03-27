@@ -529,8 +529,12 @@ def _fetch_real_event_data(
             return pd.DataFrame()
 
         ohlcv = ohlcv.reset_index()
-        ohlcv.columns = ["date", "open", "high", "low", "close", "volume",
-                         "trading_value", "price_change"]
+        col_map = {
+            ohlcv.columns[0]: "date",
+            "시가": "open", "고가": "high", "저가": "low", "종가": "close",
+            "거래량": "volume", "거래대금": "trading_value", "등락률": "price_change",
+        }
+        ohlcv = ohlcv.rename(columns=col_map)
         ohlcv["date"] = pd.to_datetime(ohlcv["date"])
         ohlcv["return_pct"] = ohlcv["close"].pct_change() * 100
 

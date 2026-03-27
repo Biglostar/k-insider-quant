@@ -82,7 +82,6 @@ def fetch_real_data(target_date: str) -> pd.DataFrame:
         reports = dart.report(
             corp="",               # 전체 기업
             key_word="지분",        # 지분 관련 보고서
-            bsn_tp="",
             page_no=1,
             page_count=100,
             start_dt=date_str,

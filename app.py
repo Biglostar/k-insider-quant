@@ -306,7 +306,11 @@ with tab_main:
         for _, r in scored_df.iterrows():
             sc = r.get("signal_score", 0)
             sc_cls = "score-high" if sc >= 70 else ("score-medium" if sc >= 45 else "score-low")
-            tbl += f"<tr><td>{r['report_date']}</td><td style='color:#E0E0E0;font-weight:600;'>{r['corp_name']} <span style='color:#5A6577;font-size:0.78rem;'>({r['stock_code']})</span></td><td>{market_badge(r.get('market',''))}</td><td style='color:#8892A4;'>{r.get('sector','기타')}</td><td>{r['reporter_name']}</td><td>{r['position']}</td><td>{r['change_reason']}</td><td style='text-align:right;'>{int(r['shares_changed']):,}</td><td style='text-align:right;color:#00D4AA;font-weight:600;'>{r['buy_ratio']:.3f}%</td><td><span class='score-badge {sc_cls}'>{sc}</span></td><td style='text-align:right;'>W{int(r['current_price']):,}</td><td><a href='{r['dart_url']}' target='_blank'>보기</a></td></tr>"
+            dart_url = r.get("dart_url", "")
+            rcept_no = r.get("rcept_no", "")
+            is_real_rcept = len(str(rcept_no)) == 14
+            link_cell = f"<a href='{dart_url}' target='_blank'>보기</a>" if dart_url and is_real_rcept else "<span style='color:#5A6577;'>-</span>"
+            tbl += f"<tr><td>{r['report_date']}</td><td style='color:#E0E0E0;font-weight:600;'>{r['corp_name']} <span style='color:#5A6577;font-size:0.78rem;'>({r['stock_code']})</span></td><td>{market_badge(r.get('market',''))}</td><td style='color:#8892A4;'>{r.get('sector','기타')}</td><td>{r['reporter_name']}</td><td>{r['position']}</td><td>{r['change_reason']}</td><td style='text-align:right;'>{int(r['shares_changed']):,}</td><td style='text-align:right;color:#00D4AA;font-weight:600;'>{r['buy_ratio']:.3f}%</td><td><span class='score-badge {sc_cls}'>{sc}</span></td><td style='text-align:right;'>W{int(r['current_price']):,}</td><td>{link_cell}</td></tr>"
         tbl += "</table>"
         st.markdown(tbl, unsafe_allow_html=True)
         st.download_button("CSV 다운로드", scored_df.to_csv(index=False, encoding="utf-8-sig"), f"k_insider_{start_date}_{end_date}.csv", "text/csv")
